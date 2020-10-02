@@ -1,9 +1,9 @@
-.PHONY: check createdb pull run
+.PHONY: check createdb ping pull run
 
-tag      ?= latest
 db       ?= db_local
 file     ?=
 pw       ?= mysqlrootpassword
+tag      ?= latest
 work_dir := $(shell pwd)
 
 check:
