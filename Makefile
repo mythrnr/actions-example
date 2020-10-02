@@ -8,7 +8,7 @@ work_dir := $(shell pwd)
 
 check:
 	docker exec mysql-check-ddl-$(db) sh -c \
-		"mysql -u root --password=$(pw) < /tmp/files/$(file)"
+		"mysql -u root --password=$(pw) --database=$(db) < /tmp/files/$(file)"
 
 createdb:
 	docker exec mysql-check-ddl-$(db) sh -c \
