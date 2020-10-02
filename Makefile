@@ -1,23 +1,26 @@
 .PHONY: check createdb pull run
 
-tag  ?= latest
-db   ?= db_local
-file ?=
-pw   ?= mysqlrootpassword
+tag      ?= latest
+db       ?= db_local
+file     ?=
+pw       ?= mysqlrootpassword
+work_dir := $(shell pwd)
 
 check:
-	docker exec mysql-check-ddl-$(db) \
-		mysql -u root --password=$(pw) < $(file)
+	docker exec mysql-check-ddl-$(db) sh -c \
+		"mysql -u root --password=$(pw) < /tmp/files/$(file)"
 
 createdb:
-	SQL="CREATE SCHEMA IF NOT EXISTS $(db) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
 	docker exec mysql-check-ddl-$(db) sh -c \
-		'echo $$SQL | mysql -u root --password=$(pw)'
+		"echo \"CREATE SCHEMA IF NOT EXISTS $(db) \
+			DEFAULT CHARACTER SET utf8mb4 \
+			COLLATE utf8mb4_bin\" \
+		| mysql -u root --password=$(pw)"
 
 ping:
-	SQL="SHOW databases"
 	docker exec mysql-check-ddl-$(db) sh -c \
-		'echo $$SQL | mysql -u root --password=$(pw)'
+		"echo \"SHOW databases\" \
+		| mysql -u root --password=$(pw)"
 
 pull:
 	docker pull mysql:$(tag)
@@ -26,4 +29,5 @@ run:
 	docker run --rm \
 		--name mysql-check-ddl-$(db) \
 		-e MYSQL_ROOT_PASSWORD=$(pw) \
+		-v $(work_dir)/check-ddl:/tmp/files/check-ddl \
 		-d mysql:$(tag)
