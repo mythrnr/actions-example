@@ -1,4 +1,4 @@
--- valid DDL
+-- Valid DDL
 CREATE TABLE IF NOT EXISTS `user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(200) NOT NULL,
