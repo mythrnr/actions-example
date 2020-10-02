@@ -42,6 +42,7 @@ jobs:
               *.sql)
                 echo "exec: $f"
                 db=`basename ${f%.*}`
+                db=${db##*.}
 
                 make run db=$db
                 while :
@@ -52,12 +53,15 @@ jobs:
                   if [ $sts -eq 0 ]; then
                     break
                   fi
+
+                  sleep 1s
                 done
 
                 make createdb db=$db
                 make check db=$db file=$f
                 sts=$?
                 ret=$((ret||sts))
+                echo "current result: $ret"
                 ;;
               *)
                 echo "ignore: $f"
