@@ -1,0 +1,14 @@
+{
+  "problemMatcher": [
+    {
+      "owner": "check-ddl",
+      "pattern": [
+        {
+          "regexp": "^ERROR (.*) at line (\\d+): (.*)$",
+          "line": 2,
+          "message": 3
+        }
+      ]
+    }
+  ]
+}
