@@ -1,4 +1,4 @@
-.PHONY: check createdb ping pull run
+.PHONY: check createdb down ping pull run
 
 db       ?= db_local
 file     ?=
@@ -16,6 +16,9 @@ createdb:
 			DEFAULT CHARACTER SET utf8mb4 \
 			COLLATE utf8mb4_bin\" \
 		| mysql -u root --password=$(pw)"
+
+down:
+	docker stop mysql-check-ddl-$(db)
 
 ping:
 	docker exec mysql-check-ddl-$(db) sh -c \
