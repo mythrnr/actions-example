@@ -12,12 +12,12 @@ check:
 createdb:
 	SQL="CREATE SCHEMA IF NOT EXISTS $(db) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin"
 	docker exec mysql-check-ddl-$(db) sh -c \
-		'echo $SQL | mysql -u root --password=$(pw)'
+		'echo $$SQL | mysql -u root --password=$(pw)'
 
 ping:
 	SQL="SHOW databases"
 	docker exec mysql-check-ddl-$(db) sh -c \
-		'echo $SQL | mysql -u root --password=$(pw)'
+		'echo $$SQL | mysql -u root --password=$(pw)'
 
 pull:
 	docker pull mysql:$(tag)
