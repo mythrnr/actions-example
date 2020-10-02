@@ -40,11 +40,18 @@ jobs:
           for f in $files; do
             case "$f" in
               *.sql)
-                echo "exec: $f"
+                echo "########################################"
+                echo "#"
+                echo "# Check: $f"
+                echo "#"
+                echo "########################################"
+
                 db=`basename ${f%.*}`
                 db=${db##*.}
 
                 make run db=$db
+
+                # Waiting to start up.
                 while :
                 do
                   make ping db=$db
@@ -58,10 +65,12 @@ jobs:
                 done
 
                 make createdb db=$db
-                make check db=$db file=$f
+                make check    db=$db file=$f
+
                 sts=$?
                 ret=$((ret||sts))
-                echo "current result: $ret"
+
+                echo "Result: $ret"
                 ;;
               *)
                 echo "ignore: $f"
