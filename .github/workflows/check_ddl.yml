@@ -70,7 +70,7 @@ jobs:
                 sts=$?
                 ret=$((ret||sts))
 
-                make down
+                make down db=$db
                 echo "Result: $ret"
                 ;;
               *)
