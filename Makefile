@@ -29,5 +29,5 @@ run:
 	docker run --rm \
 		--name mysql-check-ddl-$(db) \
 		-e MYSQL_ROOT_PASSWORD=$(pw) \
-		-v $(work_dir)/check-ddl:/tmp/files/check-ddl \
+		-v $(work_dir):/tmp/files \
 		-d mysql:$(tag)
