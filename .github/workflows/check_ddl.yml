@@ -1,0 +1,71 @@
+name: "Check DDL syntax"
+
+on:
+  push:
+    branches:
+      - "master"
+    paths:
+      - "**.sql"
+
+env:
+  SLACK_COLOR_FAILED: "#a92d2e"
+  SLACK_COLOR: "#32bd77"
+  SLACK_ICON: "https://github.com/github.png"
+  SLACK_USERNAME: "GitHub Actions"
+
+jobs:
+  checking:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - name: "Pull MySQL Image"
+        run: "make pull"
+
+      - uses: "lots0logs/gh-action-get-changed-files@2.1.4"
+        id: "commit-files"
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: "Enable problem matcher for check-ddl"
+        run: echo "::add-matcher::.github/problem-matchers/check-ddl.json"
+
+      - name: "Execute Checking"
+        run: |
+          set +e
+
+          ret=0
+          files="${{ join(fromJson(steps.commit-files.outputs.all), ' ') }}"
+
+          for f in $files; do
+            case "$f" in
+              *.sql)
+                echo "exec: $f"
+                db=`basename ${f%.*}`
+
+                make run db=$db
+                while :
+                do
+                  make ping db=$db
+                  sts=$?
+
+                  if [ $sts -eq 0 ]; then
+                    break
+                  fi
+                done
+
+                make createdb db=$db
+                make check db=$db file=$f
+                sts=$?
+                ret=$((ret||sts))
+                ;;
+              *)
+                echo "ignore: $f"
+                ;;
+            esac
+          done
+
+          exit $ret
+
+      - name: "remove problem matcher"
+        run: echo "::remove-matcher owner=check-ddl::"
