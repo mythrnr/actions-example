@@ -13,20 +13,13 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        target: [1, 2, 3]
-        include:
-          - target: 1
-            value: "value1"
-          - target: 2
-            value: "value2"
-          - target: 2
-            value: "value3"
-          - target: 3
-            value: "value4"
-          - target: 3
-            value: "value5"
-          - target: 3
-            value: "value6"
+        values:
+          - { target: 1, value: "value1" }
+          - { target: 2, value: "value2" }
+          - { target: 2, value: "value3" }
+          - { target: 3, value: "value3" }
+          - { target: 3, value: "value4" }
+          - { target: 3, value: "value6" }
     steps:
-      - if: "matrix.target == github.event.inputs.target"
-        run: "echo ${{ matrix.value }}"
+      - if: "matrix.values.target == github.event.inputs.target"
+        run: "echo ${{ matrix.values.value }}"
