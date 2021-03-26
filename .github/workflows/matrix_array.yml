@@ -21,5 +21,7 @@ jobs:
           - { target: 3, value: "value4" }
           - { target: 3, value: "value6" }
     steps:
-      - if: "matrix.values.target == github.event.inputs.target"
-        run: "echo ${{ matrix.values.value }}"
+      - if: "matrix.values.target != github.event.inputs.target"
+        uses: "andymckay/cancel-action@0.2"
+
+      - run: "echo ${{ matrix.values.value }}"
