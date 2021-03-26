@@ -1,0 +1,19 @@
+name: "matrix test"
+
+on:
+  workflow_dispatch:
+    inputs:
+      value:
+        description: "sample input (asdf | qwer)"
+        required: true
+        default: ""
+
+jobs:
+  debug:
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        asdf: [1, 2, 3, 4]
+        qwer: [9, 8, 7, 6]
+    steps:
+      - run: "echo ${{ matrix[github.event.inputs.value] }}"

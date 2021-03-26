@@ -1,0 +1,32 @@
+name: "matrix test"
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "sample input (1 | 2 | 3)"
+        required: true
+        default: ""
+
+jobs:
+  debug_include:
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        target: [1, 2, 3]
+        include:
+          - target: 1
+            value: "value1"
+          - target: 2
+            value: "value2"
+          - target: 2
+            value: "value3"
+          - target: 3
+            value: "value4"
+          - target: 3
+            value: "value5"
+          - target: 3
+            value: "value6"
+    steps:
+      - if: "matrix.target == github.event.inputs.target"
+        run: "echo ${{ matrix.value }}"
