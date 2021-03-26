@@ -9,19 +9,24 @@ on:
         default: ""
 
 jobs:
-  debug_include:
+  debug_array:
     runs-on: "ubuntu-latest"
     strategy:
+      fail-fast: false
       matrix:
         values:
           - { target: 1, value: "value1" }
           - { target: 2, value: "value2" }
           - { target: 2, value: "value3" }
-          - { target: 3, value: "value3" }
           - { target: 3, value: "value4" }
+          - { target: 3, value: "value5" }
           - { target: 3, value: "value6" }
-    steps:
-      - if: "matrix.values.target != github.event.inputs.target"
-        uses: "andymckay/cancel-action@0.2"
 
-      - run: "echo ${{ matrix.values.value }}"
+    steps:
+      - if: "matrix.values.target == github.event.inputs.target"
+        name: "Set job as run"
+        run: |
+          echo "RUN=1" >> $GITHUB_ENV
+
+      - if: "env.RUN"
+        run: "echo ${{ matrix.values.value }}"
