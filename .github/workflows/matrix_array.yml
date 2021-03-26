@@ -1,4 +1,4 @@
-name: "matrix test"
+name: "matrix_array"
 
 on:
   workflow_dispatch:
