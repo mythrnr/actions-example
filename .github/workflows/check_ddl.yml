@@ -25,7 +25,7 @@ jobs:
       - uses: "lots0logs/gh-action-get-changed-files@2.1.4"
         id: "commit-files"
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Enable problem matcher for check-ddl"
         run: echo "::add-matcher::.github/problem-matchers/check-ddl.json"
