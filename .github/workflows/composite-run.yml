@@ -7,4 +7,6 @@ jobs:
   debug:
     runs-on: "ubuntu-latest"
     steps:
-      - run: "actions/composite-example@master"
+      - uses: "actions/checkout@v2"
+
+      - uses: ".github/actions/composite-example"
