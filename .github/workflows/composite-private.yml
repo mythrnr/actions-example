@@ -8,12 +8,15 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - run: "pwd; ls -al"
+
       - uses: "actions/checkout@v2"
+
       - run: "pwd; ls -al"
+
       - uses: "actions/checkout@v2"
         with:
-          repository: "mythrnr/workspace"
-          token: "${{ secrets.SECRET_TOKEN }}"
-          path: "../../"
+          repository: "mythrnr/httprouter-group"
+
       - run: "pwd; ls -al"
+
       - uses: "./../../.github/actions/private-example"
