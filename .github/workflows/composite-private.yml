@@ -7,13 +7,13 @@ jobs:
   debug:
     runs-on: "ubuntu-latest"
     steps:
-      - run: "pwd"
+      - run: "pwd; ls -al"
       - uses: "actions/checkout@v2"
-      - run: "pwd"
+      - run: "pwd; ls -al"
       - uses: "actions/checkout@v2"
         with:
           repository: "mythrnr/workspace"
           token: "${{ secrets.SECRET_TOKEN }}"
           path: "../../"
-      - run: "pwd"
+      - run: "pwd; ls -al"
       - uses: "./../../.github/actions/private-example"
