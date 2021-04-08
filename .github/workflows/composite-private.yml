@@ -1,0 +1,18 @@
+name: "composite-private"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v2"
+
+      - uses: "actions/checkout@v2"
+        with:
+          repository: "mythrnr/workspace"
+          token: "${{ secrets.SECRET_TOKEN }}"
+          path: "../../"
+
+      - uses: "../../.github/actions/private-example"
