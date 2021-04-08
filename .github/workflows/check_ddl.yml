@@ -7,12 +7,6 @@ on:
     paths:
       - "**.sql"
 
-env:
-  SLACK_COLOR_FAILED: "#a92d2e"
-  SLACK_COLOR: "#32bd77"
-  SLACK_ICON: "https://github.com/github.png"
-  SLACK_USERNAME: "GitHub Actions"
-
 jobs:
   checking:
     runs-on: "ubuntu-latest"

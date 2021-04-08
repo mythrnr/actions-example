@@ -1,0 +1,10 @@
+name: "composite-example"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: "ubuntu-latest"
+    steps:
+      - run: "actions/composite-example@master"
