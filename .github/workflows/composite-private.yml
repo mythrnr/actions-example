@@ -6,21 +6,13 @@ on:
 jobs:
   debug:
     runs-on: "ubuntu-latest"
-    env:
-      EXTERNAL_ACTION: ".github/external-actions/mythrnr/workspace"
     steps:
-      - run: "pwd; ls -al"
-
       - uses: "actions/checkout@v2"
-
-      - run: "pwd; ls -al"
 
       - uses: "actions/checkout@v2"
         with:
           repository: "mythrnr/workspace"
           token: "${{ secrets.SECRET_TOKEN }}"
-          path: "${{ env.EXTERNAL_ACTION }}"
+          path: "./.github/external-actions"
 
-      - run: "pwd; ls -al; ls -al .github/external-actions"
-
-      - uses: "${{ env.EXTERNAL_ACTION }}/.github/actions/private-example"
+      - uses: "./.github/external-actions/.github/actions/private-example"
