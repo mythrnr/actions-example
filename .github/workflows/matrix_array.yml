@@ -22,10 +22,11 @@ jobs:
           - { target: 3, value: "value5" }
           - { target: 3, value: "value6" }
 
+    if: "matrix.values.target == github.event.inputs.target"
     steps:
-      - if: "matrix.values.target == github.event.inputs.target"
-        name: "Set job as run"
-        run: echo "RUN=1" >> $GITHUB_ENV
+      # - if: "matrix.values.target == github.event.inputs.target"
+      #   name: "Set job as run"
+      #   run: echo "RUN=1" >> $GITHUB_ENV
 
       - if: "env.RUN"
         run: "echo ${{ matrix.values.value }}"
