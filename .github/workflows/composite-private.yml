@@ -15,4 +15,4 @@ jobs:
           token: "${{ secrets.SECRET_TOKEN }}"
           path: "../../"
 
-      - uses: "../../.github/actions/private-example"
+      - uses: "./../../.github/actions/private-example"
