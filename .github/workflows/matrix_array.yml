@@ -22,6 +22,8 @@ jobs:
           - { key: 3, value: "value5" }
           - { key: 3, value: "value6" }
 
+    name: '${{ fromJSON(''["[Skipped] ", ""]'')[matrix.entries.key == github.event.inputs.target] }}${{ matrix.entries.key }} => ${{ matrix.entries.value }}'
+
     env:
       RUN: "${{ matrix.entries.key == github.event.inputs.target }}"
 
